@@ -26,7 +26,7 @@ void kernel_start(void)
     // on ne doit jamais sortir de kernel_start
     while (1) {
         console_init();  
-        console_putbytes("Hello World! ", 12);
+        console_putbytes("Hello World!\fa", 14);
         // cette fonction arrete le processeur
         hlt();
     }
