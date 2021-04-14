@@ -66,8 +66,11 @@ dbg: all
 	$(EMACS) --eval '(progn (make-term "QEMU" "qemu-system-i386" nil "-s" "-S" "-m" "256M" "-kernel" "kernel.bin" "-display" "curses") (split-window-horizontally) (split-window-vertically) (balance-windows) (gdb "$(DEBUG) $(DIRS) -i=mi kernel.bin") (insert "target remote :1234") (other-window 2) (toggle-frame-fullscreen) (switch-to-buffer "*QEMU*") (other-window -2))'
 
 
-run: clean kernel.bin
+run: kernel.bin
 	$(QEMU) $(QEMUOPTS)
 
 archive: clean
 	(cd .. ; tar cvf - n7OS | gzip > n7OS_`date +"%F"`.tgz)
+
+docker:
+	docker run --rm -v $(PWD):/app -w /app gcc:9 make && make run
