@@ -7,4 +7,7 @@
  */
 void console_putbytes(const char *s, int len);
 
+// Initialiser le terminal
+void console_init();
+
 #endif
