@@ -2,6 +2,7 @@
 #include <inttypes.h>
 #include <n7OS/processor_structs.h>
 #include <n7OS/console.h>
+#include <debug.h>
 
 
 void fibonacci() {
@@ -25,8 +26,8 @@ void kernel_start(void)
     
     // on ne doit jamais sortir de kernel_start
     while (1) {
-        console_init();  
-        console_putbytes("Hello World!\fa", 14);
+        console_init();
+        printf("Hello World\n");
         // cette fonction arrete le processeur
         hlt();
     }
