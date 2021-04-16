@@ -27,7 +27,11 @@ void kernel_start(void)
     // on ne doit jamais sortir de kernel_start
     while (1) {
         console_init();
-        printf("Hello World\n");
+        for (int i = 0; i < 30; i++) {
+          printf("%i\n", i);
+        }
+        printf("a\n");
+        
         // cette fonction arrete le processeur
         hlt();
     }

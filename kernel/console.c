@@ -40,9 +40,9 @@ int cursor_column; // Colonne du curseur
 // Positionner le curseur
 void cursor_setpos(uint16_t pos) {
 	outb(0xF, CURSOR_COMMAND_PORT); // Envoi de la commande 15 (0xF)
-	outb((uint8_t) pos, CURSOR_VALUE_PORT); // Envoi de la valeur de poids faible de la position
+	outb((uint8_t) (pos & 0xFF), CURSOR_VALUE_PORT); // Envoi de la valeur de poids faible de la position
 	outb(0xE, CURSOR_COMMAND_PORT); // Envoi de la commande 14 (0xE)
-	outb((uint8_t) pos >> 8, CURSOR_VALUE_PORT); // Envoi de la valeur de poids fort
+	outb((uint8_t) ((pos >> 8) & 0xFF), CURSOR_VALUE_PORT); // Envoi de la valeur de poids fort
 }
 
 
@@ -73,6 +73,15 @@ void console_init() {
 }
 
 
+// Déplacer l'affichage vers le haut pour afficher la nouvelle ligne
+void scroll() {
+	memcpy(TERMINAL_SRC, TERMINAL_SRC + TERMINAL_WIDTH, 2*TERMINAL_WIDTH*(TERMINAL_HEIGHT - 1));
+	for (int i = 0; i < TERMINAL_WIDTH; i++) {
+		console_putchar_at(' ', i, TERMINAL_HEIGHT-1);
+	}
+}
+
+
 // Écrire un caractère et mettre à jour la position du curseur
 void console_putchar(const char c) {
 	if (c > 31 && c < 127) { // Caractères affichables
@@ -94,9 +103,12 @@ void console_putchar(const char c) {
 	if (cursor_column == TERMINAL_WIDTH) { // Aller à la ligne suivante si on est à la fin de la ligne
 		cursor_column = 0;
 		cursor_row++;
-		if (cursor_row == TERMINAL_HEIGHT) // Revenir en haut de l'écran si on arrive à la fin
-			cursor_row = 0;
 	}
+	if (cursor_row == TERMINAL_HEIGHT) { // Scroller si on arrive en bas de l'écran
+		scroll();
+		cursor_row--;
+	}
+
 	uint16_t pos = cursor_row * TERMINAL_WIDTH + cursor_column;
 	cursor_setpos(pos);
 }
