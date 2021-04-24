@@ -4,6 +4,7 @@
 #include <n7OS/console.h>
 #include <n7OS/irq.h>
 #include <n7OS/processor_structs.h>
+#include <n7OS/time.h>
 
 
 void kernel_start(void)
@@ -16,9 +17,13 @@ void kernel_start(void)
           printf("%i\n", i);
         }
 
+        sti(); // activer les interruptions
+
         init_it_50();
-        sti();
         __asm__ ("int $50"::);
+
+        init_timer();
+        // __asm__ ("int $32"::);
         
         // cette fonction arrete le processeur
         hlt();

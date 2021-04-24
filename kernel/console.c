@@ -5,7 +5,11 @@
 #include <n7OS/console.h>
 #include <n7OS/cpu.h>
 
-// Couleurs du terminal
+#define CURSOR_COMMAND_PORT 0x3D4 // Port de commande du curseur
+#define CURSOR_VALUE_PORT 0x3D5 // Port de valeur du curseur
+#define TERMINAL_WIDTH 80 // Largeur du terminal
+#define TERMINAL_HEIGHT 25 // Hauteur du terminal
+
 enum color {
 	COLOR_BLACK = 0,
 	COLOR_BLUE = 1,
@@ -25,12 +29,9 @@ enum color {
 	COLOR_WHITE = 15,
 };
 
-static const size_t TERMINAL_WIDTH = 80;
-static const size_t TERMINAL_HEIGHT = 25;
+
 
 uint16_t *TERMINAL_SRC = (uint16_t*) 0xB8000; // Zone mémoire de la console
-unsigned short CURSOR_COMMAND_PORT = 0x3D4; // Port de commande du curseur
-unsigned short CURSOR_VALUE_PORT = 0x3D5; // Port de valeur du curseur
 
 enum color terminal_color_fg = COLOR_WHITE; // Couleur d'écriture
 enum color terminal_color_bg = COLOR_LIGHT_BLUE; // Couleur de fond du terminal

@@ -15,3 +15,29 @@ handler_IT:
     popl %eax
 # fin du traitant
     iret
+
+# IT 50
+.text
+    .globl handler_IT_50
+handler_IT_50:
+    pushl %eax
+    pushl %edx
+    pushl %ecx
+    call gestionIT50
+    popl %ecx
+    popl %edx
+    popl %eax
+    iret
+
+# IT 32 : timer
+.text
+    .globl handler_IT_32
+handler_IT_32:
+    pushl %eax
+    pushl %edx
+    pushl %ecx
+    call gestionIT32
+    popl %ecx
+    popl %edx
+    popl %eax
+    iret

@@ -11,7 +11,7 @@ void init_irq_entry(int irq_num, uint32_t addr) {
     entry ->sel_segment = KERNEL_CS;
     entry->zero = 0;
     
-    // P=1 (entrée configurée), DPL=00 (niveau de privilège élevé), S=0 (Trap gate), Type=1111 (Trap gate 32 bits)
+    // P=1 (entrée configurée), DPL=00 (niveau de privilège élevé), S=0 (trap gate), Type=1111 (trap gate 32 bits)
     entry->type_attr  = 0b10001111;
 }
 
