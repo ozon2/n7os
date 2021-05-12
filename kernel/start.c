@@ -5,6 +5,7 @@
 #include <n7OS/irq.h>
 #include <n7OS/processor_structs.h>
 #include <n7OS/time.h>
+#include <n7OS/sys.h>
 
 
 void kernel_start(void)
