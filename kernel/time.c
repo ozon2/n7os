@@ -18,6 +18,11 @@ Time timer; // Temps système
 // IT 32 : timer
 extern void handler_IT_32();
 
+void disable_IT_timer() {
+    // Masquage de l'IT du timer
+    outb(inb(PIC_CONFIG_PORT)|(1<<IRQ_TIMER_PORT), PIC_CONFIG_PORT);
+}
+
 void enable_IT_timer() {
     // Démasquage de l'IT du timer
     outb(inb(PIC_CONFIG_PORT)&~(1<<IRQ_TIMER_PORT), PIC_CONFIG_PORT);
@@ -39,22 +44,28 @@ void update_timer() {
     if (timer.sec == 60) {
         timer.sec = 0;
         timer.min++; 
-    } 
+    }
     if (timer.min == 60) {
         timer.min = 0;
         timer.hour++;
     }
     if (show) {
-        // TODO:
-        // snprintf
-        // strcat
-        // console_putchar_at()
+        int size = 11;
+        int offset = 69;
+        char time_str[size];
+        snprintf(time_str, size, "%02ih:%02im:%02is", timer.hour, timer.min, timer.sec);
+        for (int i = 0; i < size; i++) {
+            console_putchar_at(time_str[i], offset+i, 0);
+        }
     }
 }
 
 void gestionIT32() {
+    // On masque l'IT du timer pendant sa gestion
+    disable_IT_timer();
     update_timer();
     outb(0x20, PIC_COMMAND_PORT); // acquittement de l'interruption
+    enable_IT_timer();
 }
 
 void init_timer() {
