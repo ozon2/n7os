@@ -1,5 +1,6 @@
 #include <debug.h>
 #include <inttypes.h>
+#include <unistd.h>
 #include <n7OS/cpu.h>
 #include <n7OS/console.h>
 #include <n7OS/irq.h>
@@ -21,6 +22,8 @@ void kernel_start(void)
     __asm__ ("int $50"::);
 
     init_timer();
+
+    // shutdown(0);
 
     // on ne doit jamais sortir de kernel_start
     while (1) {
