@@ -23,7 +23,8 @@ void kernel_start(void)
 
     init_timer();
 
-    // shutdown(0);
+    init_syscall();
+    // shutdown(1);
 
     // on ne doit jamais sortir de kernel_start
     while (1) {
