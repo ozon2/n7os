@@ -11,19 +11,18 @@
 
 void kernel_start(void)
 {
-    console_init();
+    console_init(); // initialiser la console
+    sti(); // activer les interruptions
+    init_syscall(); // initialiser les appels système
+    init_timer(); // démarrer l'affichage du timer
+
     for (int i = 0; i < 30; i++) {
       printf("%i\n", i);
     }
 
-    sti(); // activer les interruptions
-
     init_it_50();
     __asm__ ("int $50"::);
 
-    init_timer();
-
-    init_syscall();
     // shutdown(1);
 
     // on ne doit jamais sortir de kernel_start
