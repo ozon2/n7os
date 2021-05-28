@@ -17,8 +17,10 @@ typedef enum STATES {
 
 typedef struct {
   uint32_t stack[STACK_SIZE];
+  char name[20];
   state_t state;
   pid_t pid;
+  uint32_t regs[5];
 } proc_t;
 
 // Type pointeur sur une fonction
@@ -29,5 +31,13 @@ typedef void* (*fnptr)();
 // int exit();
 // pid_t getpid();
 // int sleep(int seconds);
+
+int addProcess(char* name, fnptr function);
+
+void removeProcess(pid_t pid);
+
+void schedule();
+
+void initProcess();
 
 #endif

@@ -7,6 +7,7 @@
 #include <n7OS/processor_structs.h>
 #include <n7OS/time.h>
 #include <n7OS/sys.h>
+#include <n7OS/proc.h>
 
 
 void kernel_start(void)
@@ -24,6 +25,8 @@ void kernel_start(void)
     __asm__ ("int $50"::);
 
     // shutdown(1);
+
+    initProcess();
 
     // on ne doit jamais sortir de kernel_start
     while (1) {
