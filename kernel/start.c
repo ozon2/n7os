@@ -17,12 +17,12 @@ void kernel_start(void)
     init_syscall(); // initialiser les appels système
     init_timer(); // démarrer l'affichage du timer
 
-    for (int i = 0; i < 30; i++) {
-      printf("%i\n", i);
-    }
+    // for (int i = 0; i < 30; i++) {
+    //   printf("%i\n", i);
+    // }
 
-    init_it_50();
-    __asm__ ("int $50"::);
+    // init_it_50();
+    // __asm__ ("int $50"::);
 
     // shutdown(1);
 
