@@ -79,7 +79,7 @@ void console_init() {
 // Déplacer l'affichage vers le haut pour afficher la nouvelle ligne
 void scroll() {
 	memcpy(TERMINAL_SRC, TERMINAL_SRC + TERMINAL_WIDTH, 2*TERMINAL_WIDTH*(TERMINAL_HEIGHT - 1));
-	for (int i = 0; i < TERMINAL_WIDTH; i++) {
+	for (int i = 0; i < TERMINAL_WIDTH; i++) { // On affiche une nouvelle ligne vide
 		console_putchar_at(' ', i, TERMINAL_HEIGHT-1);
 	}
 	show_timer(); // Réafficher le timer après avoir scrollé

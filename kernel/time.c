@@ -5,6 +5,7 @@
 #include <n7OS/irq.h>
 #include <n7OS/console.h>
 #include <n7OS/time.h>
+#include <n7OS/proc.h>
 
 #define PIC_COMMAND_PORT 0x20
 #define PIC_CONFIG_PORT 0x21

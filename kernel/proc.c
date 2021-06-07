@@ -1,5 +1,6 @@
-#include <malloc.h>
 #include <n7OS/proc.h>
+#include <string.h>
+#include <debug.h>
 
 // Tableau des processus
 // Le processus de pid 100 sera stocké dans proc_table[100]
