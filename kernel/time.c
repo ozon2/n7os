@@ -18,16 +18,17 @@ Time timer; // Temps système
 // IT 32 : timer
 extern void handler_IT_32();
 
+// Masquage de l'IT du timer
 void disable_IT_timer() {
-    // Masquage de l'IT du timer
     outb(inb(PIC_CONFIG_PORT)|(1<<IRQ_TIMER_PORT), PIC_CONFIG_PORT);
 }
 
+// Démasquage de l'IT du timer
 void enable_IT_timer() {
-    // Démasquage de l'IT du timer
     outb(inb(PIC_CONFIG_PORT)&~(1<<IRQ_TIMER_PORT), PIC_CONFIG_PORT);
 }
 
+// Initialiser l'IT du timer
 void init_it_32() {
     init_irq_entry(32, (uint32_t) handler_IT_32);
 }
@@ -50,13 +51,7 @@ void update_timer() {
         timer.hour++;
     }
     if (show) {
-        int size = 11;
-        int offset = 69;
-        char time_str[size];
-        snprintf(time_str, size, "%02ih:%02im:%02is", timer.hour, timer.min, timer.sec);
-        for (int i = 0; i < size; i++) {
-            console_putchar_at(time_str[i], offset+i, 0);
-        }
+        show_timer(timer);
     }
 }
 
@@ -82,4 +77,15 @@ void init_timer() {
     outb(0b00110100, PIT_COMMAND_PORT); // Channel 0, accès poids faible/poids fort, générateur d’impulsion, fréquence définie en binaire
     outb(FREQUENCE&0xFF, PIT_CHANNEL0_PORT); // Affectation de la fréquence, poids faible, au Channel 0
     outb(FREQUENCE>>8, 0x40); // Affectation de la fréquence, poids faible, au Channel 0
+}
+
+// Afficher le timer
+void show_timer() {
+    int size = 11;
+    int offset = 69;
+    char time_str[size];
+    snprintf(time_str, size, "%02ih:%02im:%02is", timer.hour, timer.min, timer.sec);
+    for (int i = 0; i < size; i++) {
+        console_putchar_at(time_str[i], offset+i, 0);
+    }
 }

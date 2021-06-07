@@ -1,9 +1,11 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <inttypes.h>
 #include <n7OS/console.h>
 #include <n7OS/cpu.h>
+#include <n7OS/time.h>
 
 #define CURSOR_COMMAND_PORT 0x3D4 // Port de commande du curseur
 #define CURSOR_VALUE_PORT 0x3D5 // Port de valeur du curseur
@@ -80,6 +82,7 @@ void scroll() {
 	for (int i = 0; i < TERMINAL_WIDTH; i++) {
 		console_putchar_at(' ', i, TERMINAL_HEIGHT-1);
 	}
+	show_timer(); // Réafficher le timer après avoir scrollé
 }
 
 

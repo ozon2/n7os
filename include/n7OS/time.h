@@ -10,6 +10,10 @@ struct time {
 
 typedef struct time Time;
 
+// Démarrer le timer
 void init_timer();
+
+// Afficher le timer
+void show_timer();
 
 #endif
